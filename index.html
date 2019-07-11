@@ -123,10 +123,14 @@
             }
             
             function nextClip(){
+
                 clearTimeout(continueTimer);
                 document.getElementById("continue_text").style="visibility:hidden";
                 welcome_link.style="display:none";
                 if (clip_num<4){
+                    if (video.muted=true){
+                        document.getElementById("unmute_button").style="visibility:visible";
+                    }
                     video.src="clips/clip"+ clip_num +".mp4";
                     video.play();
                     clip_num++;
