@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            *{
+                box-sizing: border-box;
+                background-color: black;
+                z-index:0;
+            }
+            a{
+                color: white; 
+                background-color: transparent; 
+                text-decoration: none;
+            }
+            body {
+                overflow: hidden;
+            } 
+            video{
+                position:absolute;
+                width: 100vw;
+                height: 100vh;
+                border:0;
+                margin:0px;
+                z-index: 100;
+            }
+            div{
+                width:100vw;
+                height:100vh;
+                border:0;
+                margin:0px;
+                text-align:center;
+                color:aliceblue;
+                background-color: transparent;
+            }
+            div.DIALOGUE{
+                position:relative;
+                z-index:200;
+                vertical-align: middle;
+                padding: 25vw 25vh;
+                font: bold 50px arial, sans-serif;
+            }
+            div.GUIDETEXT{
+                position:absolute;
+                z-index:150;
+                font: 15px arial, sans-serif;
+
+            }
+            p{
+                position:absolute;
+                width:100vw;
+                height: 15px;
+                border:0;
+                margin:0px;
+                z-index:120;
+                padding:0px;
+                background-color:transparent;
+                font:15px arial, sans-serif;
+                color:aliceblue;
+                text-align: center;
+            }
+            
+        </style>
+    </head>
+    <body>
+        <script> var clip_num=1;</script>
+        
+        <p id = "continue_text" style="visibility:hidden">Click anywhere to continue.</p>
+        
+        <div onclick="nextClip()" class= "DIALOGUE" id="welcome" style="display:none"></div>
+        
+        <video id="moments" onended = "callTimer()" autoplay muted>
+            Video not supported.
+            <source src="clips/intro.mp4" type="video/mp4">
+        </video>
+        
+        <div onclick="unmute()" class="GUIDETEXT" id="unmute_button">
+            Click anywhere to unmute.
+        </div>
+        
+        <script>
+            var video = document.getElementById("moments");
+            var welcome_link = document.getElementById("welcome");
+            var continueTimer =setTimeout(null,0);
+            //var continueTimer=0;
+            
+            function unmute(){
+                document.getElementById("unmute_button").style="visibility:hidden";
+                video.muted = false;
+            }
+            
+            function callTimer(){
+                document.getElementById("unmute_button").style="visibility:hidden";
+                var myVar = setTimeout(makeVisible,3000);
+            }
+            function makeVisible() {
+                
+                welcome_link.style="display:block";
+                if (clip_num==1){
+                    welcome_link.innerHTML="Hello.";
+                    continueTimer = setTimeout(continuePopup,3000);
+                } else if (clip_num==2){
+                    welcome_link.innerHTML="Are you there?";
+                } else if (clip_num==3){
+                    welcome_link.innerHTML="Hello?";
+                    setTimeout(function(){welcome_link.innerHTML="Can you hear me?"},1000);
+                } else {
+                    welcome_link.onclick="";
+                    welcome_link.innerHTML="Hello.";
+                    setTimeout(function(){welcome_link.innerHTML=""},2000);
+                    setTimeout(function(){welcome_link.innerHTML+="I"},2500);
+                    setTimeout(function(){welcome_link.innerHTML+=" know"},3000);
+                    setTimeout(function(){welcome_link.innerHTML+=" you're"},3500);
+                    setTimeout(function(){welcome_link.innerHTML+=" there."},4000);
+                    setTimeout(function(){welcome_link.innerHTML=""},7000);
+                    setTimeout(function(){window.location='camera.html'}, 10000);
+                }
+                
+                
+            }
+            function continuePopup() {
+                document.getElementById("continue_text").style="visibility:visible";
+            }
+            
+            function nextClip(){
+                clearTimeout(continueTimer);
+                document.getElementById("continue_text").style="visibility:hidden";
+                welcome_link.style="display:none";
+                if (clip_num<4){
+                    video.src="clips/clip"+ clip_num +".mp4";
+                    video.play();
+                    clip_num++;
+                }
+                else {
+                    
+                }
+            }
+        </script>
+        
+        
+        
+        
+        
+    </body>
+</html>
